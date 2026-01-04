@@ -7,17 +7,165 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 SESSION_CONFIGS = [
     {
-        'name': "hider",
-        'display_name': "hider",
+        'name': "hider_3_boxes_2_opens",
+        'display_name': "hider, 3 boxes, 2 opens",
         'num_demo_participants': 1,
         'app_sequence': ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1],
+            [1, 1, 3],
+            [3, 3, 1],
+            [1, 2, 3],
+        ],
+        'starting_money': [72, 56, 40, 44],
+        'boxes_to_open': [2, 2, 2, 2],
     },
+
     {
-        'name': "seeker",
-        'display_name': "seeker",
+        'name': "hider_3_boxes_3_opens",
+        'display_name': "hider, 3 boxes, 3 opens",
+        'num_demo_participants': 1,
+        'app_sequence': ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1],
+            [1, 1, 3],
+            [3, 3, 1],
+            [1, 2, 3],
+        ],
+        'starting_money': [72, 56, 40, 44],
+        'boxes_to_open': [3, 3, 3, 3],
+    },
+
+    {
+        'name': "hider_4_boxes_2_opens",
+        'display_name': "hider, 4 boxes, 2 opens",
+        'num_demo_participants': 1,
+        'app_sequence': ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1, 1],
+            [1, 1, 1, 3],
+            [3, 3, 3, 1],
+            [1, 2, 3, 4],
+        ],
+        'starting_money': [96, 80, 48, 50],
+        'boxes_to_open': [2, 2, 2, 2],
+    },
+
+    {
+        'name': "hider_5_boxes_2_opens",
+        'display_name': "hider, 5 boxes, 2 opens",
+        'num_demo_participants': 1,
+        'app_sequence': ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 3],
+            [3, 3, 3, 3, 1],
+            [1, 2, 3, 4, 6],
+        ],
+        'starting_money': [120, 104, 56, 54],
+        'boxes_to_open': [2, 2, 2, 2],
+    },
+
+    {
+        'name': "hider_5_boxes_3_opens",
+        'display_name': "hider, 5 boxes, 3 opens",
+        'num_demo_participants': 1,
+        'app_sequence': ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 3],
+            [3, 3, 3, 3, 1],
+            [1, 2, 3, 4, 6],
+        ],
+        'starting_money': [120, 104, 56, 54],
+        'boxes_to_open': [3, 3, 3, 3],
+    },
+
+    {
+        'name': "seeker_3_boxes_2_open",
+        'display_name': "seeker, 3 boxes, 2 opens",
         'num_demo_participants': 1,
         'app_sequence': ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1],
+            [1, 1, 3],
+            [1, 3, 3],
+            [1, 2, 3],
+        ],
+        'starting_money': [96, 80, 48, 50],
+        'boxes_to_open': [2, 2, 2, 2],
     },
+
+    {
+        'name': "seeker_3_boxes_3_open",
+        'display_name': "seeker, 3 boxes, 3 opens",
+        'num_demo_participants': 1,
+        'app_sequence': ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1],
+            [1, 1, 3],
+            [1, 3, 3],
+            [1, 2, 3],
+        ],
+        'starting_money': [72, 56, 40, 44],
+        'boxes_to_open': [3, 3, 3, 3],
+    },
+
+    {
+        'name': "seeker_4_boxes_2_open",
+        'display_name': "seeker, 4 boxes, 2 opens",
+        'num_demo_participants': 1,
+        'app_sequence': ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1, 1],
+            [1, 1, 1, 3],
+            [3, 3, 3, 1],
+            [1, 2, 3, 4],
+        ],
+        'starting_money': [96, 80, 48, 50],
+        'boxes_to_open': [2, 2, 2, 2],
+    },
+
+    {
+        'name': "seeker_5_boxes_2_open",
+        'display_name': "seeker, 5 boxes, 2 opens",
+        'num_demo_participants': 1,
+        'app_sequence': ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 3],
+            [3, 3, 3, 3, 1],
+            [1, 2, 3, 4, 6],
+        ],
+        'starting_money': [120, 104, 56, 54],
+        'boxes_to_open': [2, 2, 2, 2],
+    },
+
+    {
+        'name': "seeker_5_boxes_3_open",
+        'display_name': "seeker, 5 boxes, 3 opens",
+        'num_demo_participants': 1,
+        'app_sequence': ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+
+        'multipliers': [
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 3],
+            [3, 3, 3, 3, 1],
+            [1, 2, 3, 4, 6],
+        ],
+        'starting_money': [120, 104, 56, 54],
+        'boxes_to_open': [3, 3, 3, 3],
+    },
+
     {
         'name': "treatment_allocator",
         'display_name': "treatment_allocator",
@@ -41,6 +189,7 @@ PARTICIPANT_FIELDS = [
     "user_accepted_terms",
     "ended_successfully",
     "role",
+    "num_boxes",
 ]
 SESSION_FIELDS = []
 

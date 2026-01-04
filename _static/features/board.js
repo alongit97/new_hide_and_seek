@@ -1,250 +1,30 @@
 function renderHiderBoardPage() {
     const jsxCode = `
-        function Stam(){
-            return <div></div>
-        }
         function reducer(state, action){
-            if (action.type === "setDistribution"){
-                const distribution = action.distribution
-                return {...state, distribution}
+            switch(action.type){
+                case "setDistribution":
+                    return {...state, distribution: action.distribution}
+                case "setModal":
+                    return {...state, modal: action.modal}
+                case "closeModal":
+                    return {...state, modal: null}
+                case "finishRounds":
+                    return {...state, currentStep: "feedback"}
+                default:
+                    return state
             }
-            if (action.type === "setModal"){
-                return {...state, modal: action.modal}
-            }
-            if (action.type === "closeModal"){
-                return {...state, modal: null}
-            }
-            if (action.type === "finishRounds"){
-                return {...state, currentStep: "feedback"}
-            }
-            return state
         }
-        const initialState = {
-            multipliers: js_vars.multipliers,
-            totalNumberOfObjects: js_vars.totalNumberOfObjects,
-            distribution : [0,0,0,0],
-            modal : null,
-        }
-        const DispatchContext = React.createContext(null)
-        const StateContext = React.createContext(null)
-        const JsVarsContext = React.createContext(null)
-        function HiderBoardPage(props){
-            const [state, dispatch] = React.useReducer(reducer, initialState)
-            return (
-                    <DispatchContext.Provider value={dispatch}>
-                        <StateContext.Provider value={state}>
-                            <section>
-                                <Rounds {...props}/>
-                            </section>
-                        </StateContext.Provider>
-                    </DispatchContext.Provider>
-            )
-        }
-        function Rounds(props){
-            const [progress, setProgress] = React.useState("distribution")// distribution, results
-            const [selectedBoxIndex, setSelectedBoxIndex] = React.useState(null)
-            const [temporaryNumber, setTemporaryNumber] = React.useState(null)
-            const state = React.useContext(StateContext)
-            const dispatch = React.useContext(DispatchContext)
-            const currentDistribution = React.useMemo(()=>state.distribution, [state.distribution])
-            const numberOfObjectsInStorage = React.useMemo(()=> {
-                const totalNumberOfObjects = state.totalNumberOfObjects
-                const numberOfHiddenObjects = currentDistribution.reduce((a,b)=>a+b,0)
-                return totalNumberOfObjects - numberOfHiddenObjects
-            }, [state.numberOfObjectsByRound, currentDistribution])
-            function onDistributionChange(numberOfObjects, boxIndex){
-                const newDistribution = [...currentDistribution]
-                newDistribution[boxIndex] = numberOfObjects
-                const numberOfHiddenObjects = newDistribution.reduce((a,b)=>a+b,0)
-                if (numberOfHiddenObjects > state.totalNumberOfObjects){
-                    return
-                }
-                dispatch({type:"setDistribution", distribution: newDistribution})
-                for (let i=0; i<newDistribution.length; i++){
-                    liveSend({
-                        action: "set_number_of_objects",
-                        box_index : i,
-                        number_of_objects : newDistribution[i],
-                    })
-                }
-            }
-            function onBoxBlur(boxIndex){
-                if (isNaN(parseInt(temporaryNumber)) || parseInt(temporaryNumber) < 0){
-                    setTemporaryNumber(null)
-                }
-                else {
-                    onDistributionChange(parseInt(temporaryNumber), boxIndex)
-                }
-                setSelectedBoxIndex(null)   
-                setTemporaryNumber(null)
-            }
-            function onBoxChange(newValue){
-                setTemporaryNumber(newValue)
-            }
-            function onReset(){
-                dispatch({type:"setDistribution", distribution: [0,0,0,0]})
-                setProgress("distribution")
-            }
-            function onDone(){
-                liveSend({
-                    'action': 'finish_round',
-                })
-            }
-            const storageClassName = () =>{
-                let className = "storage"
-                if (numberOfObjectsInStorage === 0){
-                    className += " green"
-                }
-                return className
-            }
-            return (
-                <section>
-                    <h4>Round {props.roundNumber}</h4>
-                    <div className="hider-board">
-                        <div className="board-row background-yellow">
-                            <div className="info">
-                                <p>
-                                    <u>Your Task:</u><br/>
-                                    You need to hide {numberOfObjectsInStorage} objects in some or all the boxes.
-                                </p>
-                            </div>
-                            <div className={storageClassName()}>
-                                <h4>
-                                    {numberOfObjectsInStorage}
-                                </h4>
-                                <span style={{alignSelf:"center"}}>
-                                    Objects left to hide
-                                </span>
-                            </div>
-                            {/* boxes */}
-                            <div className="boxes-area">
-                                { progress === "distribution" &&
-                                    <>
-                                        <div className="boxes">
-                                            {
-                                                currentDistribution.map((numberOfObjects, boxIndex)=>{
-                                                    return (
-                                                        <div className="box-container">
-                                                            <div className="box box-open hider">
-                                                                <input 
-                                                                    type="number"  
-                                                                    value={selectedBoxIndex === boxIndex ? temporaryNumber : numberOfObjects.toString()}
-                                                                    onFocus={()=>{
-                                                                        if (progress !== "distribution") return
-                                                                        setSelectedBoxIndex(boxIndex)
-                                                                    }}
-                                                                    onBlur={()=>onBoxBlur(boxIndex)} 
-                                                                    onChange={(e)=>onBoxChange(e.target.value)}
-                                                                    onKeyDown={(e)=>{
-                                                                        if (e.key === "Enter"){
-                                                                            onBoxBlur(boxIndex)
-                                                                            e.target.blur()
-                                                                        }
-                                                                    }}
-                                                                    />
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </>
-                                }
-                            </div>
-                        </div>
-                        <div className="board-row background-dark-grey">
-                            <div className="info background-light-grey">
-                                The objects will multiply in the boxes
-                            </div>
-                            <div className="boxes">
-                                { 
-                                    currentDistribution.map((_,boxIndex)=>{
-                                        return (
-                                            <div className="box-container">
-                                                <h6 className="arrow-down">
-                                                    ×{state.multipliers[boxIndex]}
-                                                </h6>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
-                        <div className="board-row background-dark-grey">
-                            <div className="info background-light-grey">
-                                Another player will choose 2 boxes to “steal”. They will only know the boxes’ multiplier rates.
-                            </div>
-                            <div className="boxes">
-                                {
-                                    currentDistribution.map((numberOfObjects, boxIndex)=>{
-                                        const value = numberOfObjects * state.multipliers[boxIndex]
-                                        return (
-                                            <div className="box-container">
-                                                <div className="box-closed box" style={{userSelect:'none'}}><span>{value}</span></div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
-                            <div className="footer">
-                                {
-                                    progress === "results" &&
-                                        <p>
-                                            Above you can see the value of each box. The value is calculated by multiplying the number of objects in the box by the box’s multiplication rate.<br/>
-                                            You can now proceed to the next round, or click back and hide again.
-                                        </p>
-                                }
-                                {
-                                    numberOfObjectsInStorage === 0 &&
-                                        <div className="buttons">
-                                            { progress === "results" &&
-                                                <button className="btn btn-primary" type="button" onClick={onReset}>Back</button>
-                                            }
-                                            <button className="btn btn-primary" type="button" onClick={onDone}>Done</button>
-                                        </div>
-                                }
-                        </div>
-                    </div>
-                </section>
-            )
-        }
-    `
-    renderReactComponent(jsxCode, "react-root", "HiderBoardPage", JSON.stringify(js_vars));
-}
 
-function renderSeekerBoardPage() {
-    const jsxCode = `
-        function Stam(){
-            return <div></div>
-        }
-        function reducer(state, action){
-            if (action.type === "setSelection"){
-                const index = action.index
-                const isSelected = action.isSelected
-                const newSelection = [...state.selection]
-                newSelection[index] = isSelected
-                return {...state, selection: newSelection}
-            }
-            if (action.type === "setModal"){
-                return {...state, modal: action.modal}
-            }
-            if (action.type === "closeModal"){
-                return {...state, modal: null}
-            }
-            if (action.type === "finishRounds"){
-                return {...state, currentStep: "feedback"}
-            }
-            return state
-        }
         const initialState = {
             multipliers: js_vars.multipliers,
             totalNumberOfObjects: js_vars.totalNumberOfObjects,
-            selection : [false, false, false, false],
-            modal : null,
+            distribution: Array(js_vars.multipliers.length).fill(0),
+            modal: null,
         }
+
         const DispatchContext = React.createContext(null)
         const StateContext = React.createContext(null)
+
         function HiderBoardPage(props){
             const [state, dispatch] = React.useReducer(reducer, initialState)
             return (
@@ -257,137 +37,131 @@ function renderSeekerBoardPage() {
                 </DispatchContext.Provider>
             )
         }
+
         function Rounds(props){
             const state = React.useContext(StateContext)
             const dispatch = React.useContext(DispatchContext)
+            const [progress, setProgress] = React.useState("distribution")
+            const [selectedBoxIndex, setSelectedBoxIndex] = React.useState(null)
+            const [temporaryNumber, setTemporaryNumber] = React.useState(null)
+
+            const numberOfObjectsInStorage = React.useMemo(() => {
+                const total = state.totalNumberOfObjects
+                const hidden = state.distribution.reduce((a,b)=>a+b,0)
+                return total - hidden
+            }, [state.distribution])
+
+            function onDistributionChange(numberOfObjects, boxIndex){
+                const newDistribution = [...state.distribution]
+                newDistribution[boxIndex] = numberOfObjects
+                if(newDistribution.reduce((a,b)=>a+b,0) > state.totalNumberOfObjects) return
+                dispatch({type:"setDistribution", distribution: newDistribution})
+                newDistribution.forEach((num, idx) => {
+                    liveSend({action:"set_number_of_objects", box_index: idx, number_of_objects: num})
+                })
+            }
+
+            function onBoxBlur(boxIndex){
+                if(isNaN(parseInt(temporaryNumber)) || parseInt(temporaryNumber)<0){
+                    setTemporaryNumber(null)
+                } else {
+                    onDistributionChange(parseInt(temporaryNumber), boxIndex)
+                }
+                setSelectedBoxIndex(null)
+                setTemporaryNumber(null)
+            }
+
+            function onBoxChange(newValue){
+                setTemporaryNumber(newValue)
+            }
+
             function onReset(){
-                dispatch({type:"setSelection", selection: [false, false, false, false]})
+                dispatch({type:"setDistribution", distribution: Array(state.distribution.length).fill(0)})
+                setProgress("distribution")
             }
-            function finishRound(){
-                liveSend({
-                    'action': 'finish_round',
-                })
+
+            function onDone(){
+                liveSend({action: 'finish_round'})
             }
-            function onBoxClick(boxIndex){
-                const isAlreadySelected = state.selection[boxIndex] === true
-                let isSelected = true
-                if (isAlreadySelected){
-                    isSelected = false
-                }
-                liveSend({
-                    'action': 'set_selection',
-                    'selection': state.selection.map((selection, index)=>{
-                        if (index === boxIndex){
-                            return isSelected
-                        }
-                        else {
-                            return selection
-                        }
-                    })
-                })
-                dispatch({type:"setSelection", index: boxIndex, isSelected})
+
+            const storageClassName = () => {
+                return numberOfObjectsInStorage === 0 ? "storage green" : "storage"
             }
-            const storageClassName = () =>{
-                let className = "storage"
-                return className
-            }
-            const boxesClassName = (boxIndex) =>{
-                let className = "box question-mark seeker"
-                const isSelected = state.selection[boxIndex] === true
-                if (isSelected){
-                    className += " selected"
-                }
-                return className
-            }
-            const isReadyToProceed = React.useMemo(()=>{
-                const numberOfSelectedBoxes = state.selection.filter((isSelected)=>isSelected).length
-                return numberOfSelectedBoxes === 2
-            }, [state.selection])
+
             return (
                 <section>
                     <h4>Round {props.roundNumber}</h4>
                     <div className="hider-board">
-                        <div className="board-row background-dark-grey">
-                            <div className="info background-light-grey">
-                                <p>
-                                    Another player distributed {state.totalNumberOfObjects} objects into some or all the boxes.
-                                </p>
-                            </div>
-                            {/* storage */}
-                            <div className={storageClassName()}>
-                                <h4>
-                                    {state.totalNumberOfObjects}
-                                </h4>
-                                <span style={{alignSelf:"center"}}>
-                                    Objects distributed by Hider
-                                </span>
-                            </div>
-                            <div className="boxes-area">
-                                <div className="boxes">
-                                    {
-                                        state.selection.map((_,boxIndex)=>{
-                                            return (
-                                                <div className="box-container">
-                                                    <div className="box box-open hider">
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div className="board-row background-dark-grey">
-                            <div className="info background-light-grey">
-                                The objects have multiplied in the boxes
-                            </div>
-                            <div className="boxes">
-                                {
-                                    state.selection.map((_, boxIndex)=>{
-                                        return (
-                                            <div className="box-container">
-                                                <h6 className="arrow-down">
-                                                    ×{state.multipliers[boxIndex]}
-                                                </h6>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
+                        {/* Row 1: Objects remaining + boxes */}
                         <div className="board-row background-yellow">
                             <div className="info">
                                 <p>
                                     <u>Your Task:</u><br/>
-                                    Choose 2 boxes to take.
+                                    You need to hide {numberOfObjectsInStorage} objects in the boxes.
                                 </p>
                             </div>
-                            <div className="boxes">
-                            {
-                                state.selection.map((isSelected, boxIndex)=>{
-                                    return (
-                                        <div className="box-container" >
-                                            <div className="box-closed box" >
-                                                <span className="text-white">?</span>
-                                            </div>
+                            <div className={storageClassName()}>
+                                <h4>{numberOfObjectsInStorage}</h4>
+                                <span>Objects left to hide</span>
+                            </div>
+                            <div className="boxes-area">
+                                <div className="boxes">
+                                    {state.distribution.map((num, idx)=>(
+                                        <div className="box-container" key={idx}>
+                                            <div className="box box-open hider">
                                                 <input
-                                                    type="checkbox" 
-                                                    value ={isSelected}
-                                                    onChange={()=>{onBoxClick(boxIndex)}}
-                                                    />
+                                                    type="number"
+                                                    value={selectedBoxIndex===idx ? temporaryNumber : num.toString()}
+                                                    onFocus={()=>setSelectedBoxIndex(idx)}
+                                                    onBlur={()=>onBoxBlur(idx)}
+                                                    onChange={(e)=>onBoxChange(e.target.value)}
+                                                    onKeyDown={(e)=>{if(e.key==="Enter"){onBoxBlur(idx); e.target.blur()}}}
+                                                />
+                                            </div>
                                         </div>
-                                    )
-                                })
-                            }
+                                    ))}
+                                </div>
                             </div>
                         </div>
+
+                        {/* Row 2: Multipliers */}
+                        <div className="board-row background-dark-grey">
+                            <div className="info background-light-grey">
+                                The objects will multiply in the boxes
+                            </div>
+                            <div className="storage-placeholder"></div>
+                            <div className="boxes">
+                                {state.multipliers.map((mult, idx)=>(
+                                    <div className="box-container" key={idx}>
+                                        <h6 className="arrow-down">×{mult}</h6>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Row 3: Box values */}
+                        <div className="board-row background-dark-grey">
+                            <div className="info background-light-grey">
+                                Another player will choose {props.role==="seeker" ? 2 : ""} boxes to “steal”.
+                            </div>
+                            <div className="storage-placeholder"></div>
+                            <div className="boxes">
+                                {state.distribution.map((num, idx)=>(
+                                    <div className="box-container" key={idx}>
+                                        <div className="box-closed box">
+                                            <span>{num * state.multipliers[idx]}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
                         <div className="footer">
-                        {
-                            isReadyToProceed &&
+                            {numberOfObjectsInStorage===0 &&
                                 <div className="buttons">
-                                    <button class="btn btn-primary" type="button" onClick={finishRound}>Done</button>
+                                    <button className="btn btn-primary" type="button" onClick={onDone}>Done</button>
                                 </div>
-                        }
+                            }
                         </div>
                     </div>
                 </section>
@@ -397,18 +171,144 @@ function renderSeekerBoardPage() {
     renderReactComponent(jsxCode, "react-root", "HiderBoardPage", JSON.stringify(js_vars));
 }
 
+// =======================================
+// Seeker page
+// =======================================
+function renderSeekerBoardPage() {
+    const jsxCode = `
+        function reducer(state, action){
+            switch(action.type){
+                case "setSelection":
+                    const newSel = [...state.selection]
+                    newSel[action.index] = action.isSelected
+                    return {...state, selection: newSel}
+                case "setModal":
+                    return {...state, modal: action.modal}
+                case "closeModal":
+                    return {...state, modal:null}
+                case "finishRounds":
+                    return {...state, currentStep:"feedback"}
+                default:
+                    return state
+            }
+        }
+
+        const initialState = {
+            multipliers: js_vars.multipliers,
+            totalNumberOfObjects: js_vars.totalNumberOfObjects,
+            selection: Array(js_vars.multipliers.length).fill(false),
+            modal: null,
+        }
+
+        const DispatchContext = React.createContext(null)
+        const StateContext = React.createContext(null)
+
+        function HiderBoardPage(props){
+            const [state, dispatch] = React.useReducer(reducer, initialState)
+            return (
+                <DispatchContext.Provider value={dispatch}>
+                    <StateContext.Provider value={state}>
+                        <section>
+                            <Rounds {...props}/>
+                        </section>
+                    </StateContext.Provider>
+                </DispatchContext.Provider>
+            )
+        }
+
+        function Rounds(props){
+            const state = React.useContext(StateContext)
+            const dispatch = React.useContext(DispatchContext)
+
+            function onBoxClick(idx){
+                const selected = !state.selection[idx]
+                liveSend({
+                    action: 'set_selection',
+                    selection: state.selection.map((s,i)=>i===idx?selected:s)
+                })
+                dispatch({type:"setSelection", index: idx, isSelected: selected})
+            }
+
+            const isReady = state.selection.filter(s=>s).length === js_vars.boxesToOpen
+
+            return (
+                <section>
+                    <h4>Round {props.roundNumber}</h4>
+                    <div className="hider-board">
+
+                        {/* Row 1: storage / distributed objects */}
+                        <div className="board-row background-dark-grey">
+                            <div className="info background-light-grey">
+                                <p>Another player distributed {state.totalNumberOfObjects} objects into boxes.</p>
+                            </div>
+                            <div className="storage-placeholder"></div>
+                            <div className="boxes">
+                                {state.selection.map((_,idx)=>(
+                                    <div className="box-container" key={idx}>
+                                        <div className="box box-open hider"></div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Row 2: multipliers */}
+                        <div className="board-row background-dark-grey">
+                            <div className="info background-light-grey">The objects have multiplied</div>
+                            <div className="storage-placeholder"></div>
+                            <div className="boxes">
+                                {state.multipliers.map((mult, idx)=>(
+                                    <div className="box-container" key={idx}>
+                                        <h6 className="arrow-down">×{mult}</h6>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Row 3: selection */}
+                        <div className="board-row background-yellow">
+                            <div className="info">
+                                <p><u>Your Task:</u><br/>Choose {js_vars.boxesToOpen} boxes to take.</p>
+                            </div>
+                            <div className="storage-placeholder"></div>
+                            <div className="boxes">
+                                {state.selection.map((sel, idx)=>(
+                                    <div className="box-container" key={idx}>
+                                        <div className="box-closed box"><span>?</span></div>
+                                        <input type="checkbox" checked={sel} onChange={()=>onBoxClick(idx)} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="footer">
+                            {isReady &&
+                                <div className="buttons">
+                                    <button className="btn btn-primary" type="button" onClick={()=>liveSend({action:"finish_round"})}>Done</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </section>
+            )
+        }
+    `
+    renderReactComponent(jsxCode, "react-root", "HiderBoardPage", JSON.stringify(js_vars));
+}
+
+// =======================================
+// Initialization
+// =======================================
 window.addEventListener("load", () => {
-    console.log(js_vars)
     const role = js_vars.role
-    if (role === "seeker") {
+    if(role==="seeker"){
         renderSeekerBoardPage()
-        return
+    } else {
+        renderHiderBoardPage()
     }
-    renderHiderBoardPage()
 })
 
-function liveRecv(data) {
-    if (data.action === "finish_round") {
+function liveRecv(data){
+    if(data.action==="finish_round"){
         const finishElement = document.createElement("input")
         finishElement.type = "hidden"
         finishElement.name = "finished"
