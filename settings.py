@@ -98,7 +98,7 @@ SESSION_CONFIGS = [
             [1, 3, 3],
             [1, 2, 3],
         ],
-        'starting_money': [96, 80, 48, 50],
+        'starting_money': [72, 56, 40, 44],
         'boxes_to_open': [1, 1, 1, 1],
     },
 
