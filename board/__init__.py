@@ -1,6 +1,7 @@
 from otree.api import *
 from datetime import datetime, timezone
 import json
+import itertools
 
 # ======================================================
 # Constants
@@ -31,13 +32,17 @@ class Player(BasePlayer):
 
 
 # ======================================================
-# Subsession / Group (unused but required by oTree)
+# Subsession / Group
 # ======================================================
 
+# Precompute all permutations of 4 rounds (4! = 24)
+ALL_ORDERS = list(itertools.permutations(range(C.NUM_ROUNDS)))
+
 class Subsession(BaseSubsession):
-    # optional sanity check to ensure session config lengths match NUM_ROUNDS
     def creating_session(self):
         config = self.session.config
+
+        # Sanity checks
         for key in ['multipliers', 'starting_money', 'boxes_to_open']:
             if key not in config:
                 raise ValueError(f"Missing session config key: {key}")
@@ -56,17 +61,22 @@ class Group(BaseGroup):
 class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        round_number = player.round_number
-        config = player.session.config  # <-- read the session config
+        config = player.session.config
 
-        # get round-specific values from config
-        multipliers = config['multipliers'][round_number - 1]
-        total_money = config['starting_money'][round_number - 1]
-        boxes_to_open = config['boxes_to_open'][round_number - 1]
+        # Use player.id_in_subsession to pick a permutation of rounds
+        pid = player.id_in_subsession  # 1..N
+        order = ALL_ORDERS[(pid - 1) % len(ALL_ORDERS)]
+
+        # Determine which row to show for this round
+        round_idx = order[player.round_number - 1]
+
+        multipliers = config['multipliers'][round_idx]
+        total_money = config['starting_money'][round_idx]
+        boxes_to_open = config['boxes_to_open'][round_idx]
 
         n = len(multipliers)
 
-        # store JSONs and totals in player
+        # Store JSONs and totals in player
         player.multipliers_json = json.dumps(multipliers)
         player.distribution_json = json.dumps([0] * n)
         player.selection_json = json.dumps([False] * n)
@@ -74,6 +84,9 @@ class PreProcess(Page):
         player.total_number_of_objects = total_money
         player.boxes_to_open = boxes_to_open
         player.start_time = str(datetime.now(timezone.utc))
+
+        # DEBUG
+        print(f"Player {pid} | Round {player.round_number} -> config row {round_idx}")
 
 
 class Board(Page):
