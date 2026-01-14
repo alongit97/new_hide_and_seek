@@ -10,8 +10,11 @@ class Player(BasePlayer):
 class Intro(Page):
     @staticmethod
     def js_vars(player: Player):
+        config = player.session.config
+
         return {
             "role": player.participant.role,
+            "boxes_to_open": config['boxes_to_open'][0],
         }
 
     @staticmethod

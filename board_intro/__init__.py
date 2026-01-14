@@ -10,10 +10,14 @@ class Player(BasePlayer):
 class BoardIntro(Page):
     @staticmethod
     def js_vars(player: Player):
+        config = player.session.config
+
         return {
             "role": player.participant.role,
-            "real_world_currency_per_point": player.session.config["real_world_currency_per_point"]
+            "num_boxes": len(config['multipliers'][0]),
+            "boxes_to_open": config['boxes_to_open'][0],
         }
+
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):

@@ -103,8 +103,8 @@ SESSION_CONFIGS = [
     },
 
     {
-        'name': "seeker_3_boxes_3_open",
-        'display_name': "seeker, 3 boxes, 3 opens",
+        'name': "seeker_3_boxes_2_open",
+        'display_name': "seeker, 3 boxes, 2 opens",
         'num_demo_participants': 24,
         'app_sequence': ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
 

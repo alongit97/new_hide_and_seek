@@ -33,6 +33,19 @@ class Consent(Page):
     form_fields = ["user_accepted_terms"]
 
     @staticmethod
+    def vars_for_template(player: Player):
+        config = player.session.config
+
+        num_boxes = len(config['multipliers'][0])
+        boxes_to_open = config['boxes_to_open'][0]
+
+        return {
+            'num_boxes': num_boxes,
+            'boxes_to_open': boxes_to_open,
+        }
+        
+
+    @staticmethod
     def app_after_this_page(player: Player, upcoming_apps):
         if player.user_accepted_terms == False:
             return upcoming_apps[-1]
