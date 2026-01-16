@@ -176,6 +176,11 @@ function renderTestPage() {
                             value={state.endedSuccessfully ?? false}
                         />
                         <section>
+                            {currentStep.type.name === "Question" && (
+                                <h2 style={{ marginBottom: "1rem" }}>
+                                    Test {state.currentStepIndex + 1}
+                                </h2>
+                            )}                       
                             {currentStep}
 
                             {state.showCorrect && (

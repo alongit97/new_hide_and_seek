@@ -97,7 +97,7 @@ function renderHiderBoardPage() {
                             <div className="info">
                                 <p>
                                     <u>Your Task:</u><br/>
-                                    You need to hide {numberOfObjectsInStorage} objects in the boxes.
+                                    You need to hide {numberOfObjectsInStorage} items in the boxes.
                                 </p>
                             </div>
                             <div className={storageClassName()}>
@@ -127,7 +127,7 @@ function renderHiderBoardPage() {
                         {/* Row 2: Multipliers */}
                         <div className="board-row background-dark-grey">
                             <div className="info background-light-grey">
-                                The objects will multiply in the boxes
+                                The items will multiply in the boxes
                             </div>
                             <div className="storage-placeholder"></div>
                             <div className="boxes">
@@ -142,7 +142,7 @@ function renderHiderBoardPage() {
                         {/* Row 3: Box values */}
                         <div className="board-row background-dark-grey">
                             <div className="info background-light-grey">
-                                Another player will choose {props.role==="seeker" ? 2 : ""} boxes to “steal”.
+                                Another player will choose {props.boxes_to_open} {props.boxes_to_open > 1 ? "boxes" : "box"} to “steal”.
                             </div>
                             <div className="storage-placeholder"></div>
                             <div className="boxes">
@@ -239,7 +239,7 @@ function renderSeekerBoardPage() {
                         {/* Row 1: storage / distributed objects */}
                         <div className="board-row background-dark-grey">
                             <div className="info background-light-grey">
-                                <p>Another player distributed {state.totalNumberOfObjects} objects into boxes.</p>
+                                <p>Another player distributed {state.totalNumberOfObjects} items into boxes.</p>
                             </div>
                             <div className="storage-placeholder"></div>
                             <div className="boxes">
@@ -253,7 +253,7 @@ function renderSeekerBoardPage() {
 
                         {/* Row 2: multipliers */}
                         <div className="board-row background-dark-grey">
-                            <div className="info background-light-grey">The objects have multiplied</div>
+                            <div className="info background-light-grey">The items have multiplied</div>
                             <div className="storage-placeholder"></div>
                             <div className="boxes">
                                 {state.multipliers.map((mult, idx)=>(
@@ -267,7 +267,7 @@ function renderSeekerBoardPage() {
                         {/* Row 3: selection */}
                         <div className="board-row background-yellow">
                             <div className="info">
-                                <p><u>Your Task:</u><br/>Choose {js_vars.boxesToOpen} boxes to take.</p>
+                                <p><u>Your Task:</u><br/>Choose {js_vars.boxesToOpen} {props.boxes_to_open > 1 ? "boxes" : "box"} to take.</p>
                             </div>
                             <div className="storage-placeholder"></div>
                             <div className="boxes">

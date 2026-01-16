@@ -2,6 +2,7 @@ from otree.api import *
 from datetime import datetime, timezone
 import json
 import itertools
+import random
 
 # ======================================================
 # Constants
@@ -67,12 +68,15 @@ class PreProcess(Page):
         pid = player.id_in_subsession  # 1..N
         order = ALL_ORDERS[(pid - 1) % len(ALL_ORDERS)]
 
+
         # Determine which row to show for this round
         round_idx = order[player.round_number - 1]
 
         multipliers = config['multipliers'][round_idx]
         total_money = config['starting_money'][round_idx]
         boxes_to_open = config['boxes_to_open'][round_idx]
+
+        multipliers = random.sample(multipliers, len(multipliers))
 
         n = len(multipliers)
 
@@ -95,6 +99,8 @@ class Board(Page):
 
     @staticmethod
     def js_vars(player: Player):
+        config = player.session.config
+
         return {
             "multipliers": json.loads(player.multipliers_json),
             "distribution": json.loads(player.distribution_json),
@@ -103,6 +109,7 @@ class Board(Page):
             "roundNumber": player.round_number,
             "role": player.participant.role,
             "boxesToOpen": player.boxes_to_open,
+            "boxes_to_open": config['boxes_to_open'][0],
         }
 
     @staticmethod

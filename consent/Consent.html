@@ -16,7 +16,10 @@
     </p>
     <p>
         <b>A. Project Description</b><br/>
-        The game involves a set of <b>{{ num_boxes }}</b> boxes and a number of items to be hidden in them. Each box has a value by which the number of items in that box will be multiplied (the box’ <b>multiplication rate</b>). You will play either as a “Hider” or as an “Opener”. If you are a Hider, you will allocate the items endowed to you across the boxes; if you are an Opener, you will choose <b>{{ boxes_to_open }}</b> of the boxes to be opened later. The Opener earns the value of the items that are found in the opened boxes, the Hider earns the value of the items in the remaining, unopened boxes.<br/>
+        The game involves a set of <b>{{ num_boxes }}</b> boxes and a number of items to be hidden in them. 
+        Each box has a value by which the number of items in that box will be multiplied (the box’ <b>multiplication rate</b>). You will play either as a “Hider” or as an “Opener”. If you are a Hider, you will allocate the items endowed to you across the boxes; 
+        if you are an Opener, you will choose <b>{{ boxes_to_open }}</b> of the boxes to be opened later. The Opener earns the value of the items that are found in the opened {% if boxes_to_open > 1 %}boxes{% else %}box{% endif %}, 
+        the Hider earns the value of the items in the remaining, unopened {% if num_boxes == 3 and boxes_to_open == 2 %}box{% else %}boxes{% endif %}.<br/>
         Prior to the game you will be shown a simple test of 3 questions to ensure you understood the game.
         You will get two chances to answer each question correctly. If you answer any question twice
         incorrectly, your participation will be terminated.

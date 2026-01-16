@@ -8,9 +8,9 @@ function renderInstructionsPage() {
                         Each box has a value by which the number of objects in the box is multiplied
                         (the box’ <b>multiplication rate</b>). One player (the “Hider”) chooses how
                         to distribute the objects across the boxes before a second player (the
-                        “Opener”) chooses <b>{props.boxes_to_open}</b> boxes to open. Openers get the items from
-                        the boxes they chose to open (multiplied by each box’s multiplication rate), and Hiders get the
-                        items from the unopened remaining boxes (multiplied by the boxe’s multiplication rate).
+                        “Opener”) chooses <b>{props.boxes_to_open}</b> {props.boxes_to_open > 1 ? "boxes" : "box"} to open. Openers get the items from
+                        the {props.boxes_to_open > 1 ? "boxes" : "box"} they chose to open (multiplied by each box’s multiplication rate), and Hiders get the
+                        items from the unopened remaining {props.boxes_to_open === 2 && props.num_boxes === 3 ? "box" : "boxes"} (multiplied by the boxe’s multiplication rate).
                     </p>
                     <p>
                         You will be assigned either the role of Hider or Opener and play the game
