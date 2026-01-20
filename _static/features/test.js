@@ -18,7 +18,7 @@ function renderTestPage() {
                 expectedOpenerAnswer="20"
             />,
             <Question
-                label={<span>If the Hider hides, again, 2 itemss in box B2 and 5 itemss in box B4 and the Opener opens box B2, How much will they each get?</span>}
+                label={<span>If the Hider hides, again, 2 items in box B2 and 5 items in box B4 and the Opener opens box B2, How much will they each get?</span>}
                 id="question_3"
                 expectedHiderAnswer="20"
                 expectedOpenerAnswer="4"

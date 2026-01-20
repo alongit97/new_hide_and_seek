@@ -11,7 +11,7 @@ function renderInstructionsPage() {
                 </p>
                 <p>
                     You will then be randomly matched with an opponent of the other role.
-                    For each of the sets, the boxes chosen by the Opener, will be opened,
+                    For each of the sets, the {props.boxes_to_open > 1 ? "boxes" : "box"} chosen by the Opener, will be opened,
                     and your bonus will be calculated based on the value of the items in the boxes
                     you get (either {props.boxes_to_open > 1 ? "those" : "that"} chosen by the Opener or {props.boxes_to_open === 2 && props.num_boxes == 3 ? "that" : "those"} left for the Hider).
                     The value of each point is ½ a penny.
@@ -39,7 +39,7 @@ function renderInstructionsPage() {
                         You are an <b>Opener</b>. In each set of boxes you need to choose which {props.boxes_to_open} of the {props.num_boxes} boxes to open.
                         The multiplication rate of each box is indicated under it, and the items hidden there are
                         multiplied by this rate. {props.boxes_to_open > 1 ? "Those boxes" : "That box"} will later be opened and the items in {props.boxes_to_open > 1 ? "them" : "it"} will be yours;
-                        itemss in the remaining boxes will be the Hider’s.
+                        items in the remaining {props.boxes_to_open === 2 && props.num_boxes == 3 ? "box" : "boxes"} will be the Hider’s.
                     </p>
                 )}
             </section>,
