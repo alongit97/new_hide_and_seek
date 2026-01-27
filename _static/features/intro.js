@@ -6,7 +6,7 @@ function renderInstructionsPage() {
                     <h4>Instructions</h4>
                     <p>
                         Each box has a value by which the number of items in the box is multiplied
-                        (the box’ <b>multiplication rate</b>). One player (the “Hider”) chooses how
+                        (the box’ <b>multiplication rate</b>). The multiplication rate of each box appears on it, so it is known both to the hider and to the opener. One player (the “Hider”) chooses how
                         to distribute the items across the boxes before a second player (the
                         “Opener”) chooses <b>{props.boxes_to_open}</b> {props.boxes_to_open > 1 ? "boxes" : "box"} to open. Openers get the items from
                         the {props.boxes_to_open > 1 ? "boxes" : "box"} they chose to open (multiplied by each box’s multiplication rate), and Hiders get the
