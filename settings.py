@@ -1,6 +1,7 @@
 from os import environ
-
+import dj_database_url
 from otree.project_template.settings import SESSION_CONFIG_DEFAULTS
+import os
 
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=2, participation_fee=1, doc="", currency="GBP", DEBUG=True
@@ -207,3 +208,9 @@ ADMIN_PASSWORD = "semd-admin"
 DEMO_PAGE_INTRO_HTML = """ """
 
 SECRET_KEY = '6162084313426'
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3'  # fallback for local dev
+    )
+}
