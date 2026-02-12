@@ -21,6 +21,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [72, 56, 40, 44],
         'boxes_to_open': [1, 1, 1, 1],
+        'num_boxes': 3,
     },
 
     {
@@ -37,6 +38,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [72, 56, 40, 44],
         'boxes_to_open': [2, 2, 2, 2],
+        'num_boxes': 3,
     },
 
     {
@@ -53,6 +55,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [96, 80, 48, 50],
         'boxes_to_open': [2, 2, 2, 2],
+        'num_boxes': 4,
     },
 
     {
@@ -69,6 +72,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [120, 104, 56, 54],
         'boxes_to_open': [2, 2, 2, 2],
+        'num_boxes': 5,
     },
 
     {
@@ -85,6 +89,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [120, 104, 56, 54],
         'boxes_to_open': [3, 3, 3, 3],
+        'num_boxes': 5,
     },
 
     {
@@ -101,6 +106,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [72, 56, 40, 44],
         'boxes_to_open': [1, 1, 1, 1],
+        'num_boxes': 3,
     },
 
     {
@@ -117,6 +123,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [72, 56, 40, 44],
         'boxes_to_open': [2, 2, 2, 2],
+        'num_boxes': 3,
     },
 
     {
@@ -133,6 +140,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [96, 80, 48, 50],
         'boxes_to_open': [2, 2, 2, 2],
+        'num_boxes': 4,
     },
 
     {
@@ -149,6 +157,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [120, 104, 56, 54],
         'boxes_to_open': [2, 2, 2, 2],
+        'num_boxes': 5,
     },
 
     {
@@ -165,6 +174,7 @@ SESSION_CONFIGS = [
         ],
         'starting_money': [120, 104, 56, 54],
         'boxes_to_open': [3, 3, 3, 3],
+        'num_boxes': 5,
     },
 
     {
