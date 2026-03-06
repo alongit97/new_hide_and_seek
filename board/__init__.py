@@ -65,7 +65,7 @@ class PreProcess(Page):
 
         n = len(multipliers)
 
-        boxes_to_open = num_boxes - 2 if num_boxes > 3 else 1
+        boxes_to_open = config['boxes_to_open']
 
         player.multipliers_json = json.dumps(multipliers)
         player.distribution_json = json.dumps([0] * n)

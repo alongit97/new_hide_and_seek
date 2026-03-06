@@ -37,7 +37,7 @@ class Consent(Page):
         config = player.session.config
 
         num_boxes = len(config['multipliers'][0])
-        boxes_to_open = config['boxes_to_open'][0]
+        boxes_to_open = config['boxes_to_open']
 
         return {
             'num_boxes': num_boxes,

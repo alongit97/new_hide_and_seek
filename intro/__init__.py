@@ -15,7 +15,7 @@ class Intro(Page):
         return {
             "role": player.participant.role,
             "num_boxes": len(config['multipliers'][0]),
-            "boxes_to_open": config['boxes_to_open'][0],
+            "boxes_to_open": config['boxes_to_open'],
 
         }
 

@@ -142,7 +142,7 @@ function renderHiderBoardPage() {
                         {/* Row 3: Box values */}
                         <div className="board-row background-dark-grey">
                             <div className="info background-light-grey">
-                                Another player will choose {props.boxes_to_open} {props.boxes_to_open > 1 ? "boxes" : "box"} to “steal”.
+                                Another player will choose {js_vars.boxesToOpen} {js_vars.boxesToOpen > 1 ? "boxes" : "box"} to “steal”.
                             </div>
                             <div className="storage-placeholder"></div>
                             <div className="boxes">
@@ -267,7 +267,7 @@ function renderSeekerBoardPage() {
                         {/* Row 3: selection */}
                         <div className="board-row background-yellow">
                             <div className="info">
-                                <p><u>Your Task:</u><br/>Choose {js_vars.boxesToOpen} {props.boxes_to_open > 1 ? "boxes" : "box"} to take.</p>
+                                <p><u>Your Task:</u><br/>Choose {js_vars.boxesToOpen} {js_vars.boxesToOpen > 1 ? "boxes" : "box"} to take.</p>
                             </div>
                             <div className="storage-placeholder"></div>
                             <div className="boxes">
