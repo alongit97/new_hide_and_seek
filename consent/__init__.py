@@ -36,7 +36,7 @@ class Consent(Page):
     def vars_for_template(player: Player):
         config = player.session.config
 
-        num_boxes = len(config['multipliers'][0])
+        num_boxes = config['num_boxes']
         boxes_to_open = config['boxes_to_open']
 
         return {

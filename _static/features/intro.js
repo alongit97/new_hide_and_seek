@@ -7,7 +7,7 @@ function renderInstructionsPage() {
                     <p>
                         Each box has a value by which the number of items in the box is multiplied
                         (the box’ <b>multiplication rate</b>). The multiplication rate of each box appears on it, so it is known both to the hider and to the opener. One player (the “Hider”) chooses how
-                        to distribute the items across the boxes before a second player (the
+                        to distribute the items across the boxes while a second player (the
                         “Opener”) chooses <b>{props.boxes_to_open}</b> {props.boxes_to_open > 1 ? "boxes" : "box"} to open. Openers get the items from
                         the {props.boxes_to_open > 1 ? "boxes" : "box"} they chose to open (multiplied by each box’s multiplication rate), and Hiders get the
                         items from the unopened remaining {props.boxes_to_open === 2 && props.num_boxes === 3 ? "box" : "boxes"} (multiplied by the boxes’ multiplication rate).
@@ -18,11 +18,11 @@ function renderInstructionsPage() {
                     </p>
                     <p>
                         For each of the four problems, once you indicate how you’d like to allocate the items (if you are a hider)
-                        or which boxes to open (if you are an opener). You will be randomly matched with another participant
+                        or which boxes to open (if you are an opener), you will be randomly matched with another participant
                         fulfilling the complementary role. The boxes indicated by the opener will be opened, and the value of
                         items in the opened and unopened boxes will be added to the credit of the opener and the hider,
                         respectively. Each point is worth half a penny (i.e., each 200 points are worth 1 GBP). The bonus
-                        payment will be added to your participation fee of 2 GBP. You will be informed of the bonus shortly
+                        payment will be added to your participation fee of 2 GBP. You will be informed of the bonus the day 
                         after having completed all four problems.
                     </p>
                     <p>

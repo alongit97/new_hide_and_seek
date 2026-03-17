@@ -25,7 +25,7 @@ function renderInstructionsPage() {
                         You are a <b>Hider</b>. In each set of boxes you need to hide all of your items.
                         To indicate how many items
                         you want to hide in a box, click on it and write the number. The number chosen will appear in the box,
-                        and the value of those items (number of items times the multiplication value of the box) will appear
+                        and the value of those items (number of items times the multiplication rate of the box) will appear
                         under the box. The number of items still not allocated to any of the boxes will appear on the left. Once
                         all items have been allocated you can submit that allocation. You can hide anywhere between zero and
                         all of your items in a box. The multiplication rate of each box is indicated under it, and the

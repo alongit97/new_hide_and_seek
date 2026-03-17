@@ -12,14 +12,6 @@ SESSION_CONFIGS = [
         'display_name': "hider, 3 boxes, 1 opens",
         'num_demo_participants': 24,
         'app_sequence': ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
-
-        'multipliers': [
-            [1, 1, 1],
-            [1, 1, 3],
-            [3, 3, 1],
-            [1, 2, 3],
-        ],
-        'starting_money': [72, 56, 40, 44],
         'boxes_to_open': 1,
         'num_boxes': 3,
     },
