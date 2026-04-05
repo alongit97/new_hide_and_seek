@@ -4,7 +4,7 @@ from otree.project_template.settings import SESSION_CONFIG_DEFAULTS
 import os
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=2, participation_fee=1, doc="", currency="GBP", DEBUG=False
+    real_world_currency_per_point=2, participation_fee=1, doc="", currency="GBP"
 )
 SESSION_CONFIGS = [
     {
@@ -216,3 +216,5 @@ DATABASES = {
         default='sqlite:///db.sqlite3'  # fallback for local dev
     )
 }
+
+DEBUG=False
