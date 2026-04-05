@@ -9,7 +9,7 @@ function renderExitPage(){
                     <p>
                          Thank you for your interest in this study. Unfortunately, you did not accept the terms and conditions of the study, hence you are asked to leave.<br/>
                          Please return your hit.<br/>
-                         <a target="_blank" href="https://app.prolific.com/submissions/complete?cc=C86U3VOH">Use this link in order to return to Prolific</a>
+                         <a target="_blank" href="https://app.prolific.com/submissions/complete?cc=CPIYJGE6">Use this link in order to return to Prolific</a>
                     </p>
                 )
             }
@@ -17,7 +17,7 @@ function renderExitPage(){
                 return (
                     <p>
                         You have successfully completed the study. Thank you for your participation.<br/>
-                    <a target="_blank" href="https://app.prolific.com/submissions/complete?cc=C1FIGVFZ">Use this link in order to return to Prolific</a>                        
+                    <a target="_blank" href="https://app.prolific.com/submissions/complete?cc=CGIVAQNE">Use this link in order to return to Prolific</a>                        
                     </p>
                 )
             } else {
@@ -25,7 +25,7 @@ function renderExitPage(){
                     <p>
                         Thank you for your participation in this study. Unfortunately, you did not complete the study successfully.<br/>
                         Please return your hit.<br/>
-                    <a target="_blank" href="https://app.prolific.com/submissions/complete?cc=C1HELG6N">Use this link in order to return to Prolific</a>
+                    <a target="_blank" href="https://app.prolific.com/submissions/complete?cc=C898AXUN">Use this link in order to return to Prolific</a>
                     </p>
                 )
             }
